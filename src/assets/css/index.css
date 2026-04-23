@@ -1,0 +1,13 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+.font-loader {
+    font-family: 'sans-serif', 'Poppins';
+}
+
+.ship-emoji-icon {
+    font-size: 24px;
+    text-align: center;
+    line-height: 32px;
+}
