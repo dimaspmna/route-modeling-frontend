@@ -32,6 +32,7 @@ import {
     Legend,
     PointElement,
     LineElement,
+    LineController,
     Title,
 } from "chart.js";
 import FuelLostReport from "./FuelLostReport";
@@ -47,6 +48,7 @@ ChartJS.register(
     Legend,
     PointElement,
     LineElement,
+    LineController,
     Title
 );
 

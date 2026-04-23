@@ -30,12 +30,13 @@ import {
     Legend,
     PointElement,
     LineElement,
+    LineController,
 } from "chart.js";
 import FuelLostReport from "./FuelLostReport";
 import RouteMonitoring from "./RouteMonitoring";
 import FilterMonitoring from "./FilterMonitoring";
 
-ChartJS.register(ArcElement, BarElement, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement);
+ChartJS.register(ArcElement, BarElement, LineController, CategoryScale, LinearScale, Tooltip, Legend, PointElement, LineElement);
 
 const SpvChart = () => {
     const [activeTab, setActiveTab] = useState("dashboard");
