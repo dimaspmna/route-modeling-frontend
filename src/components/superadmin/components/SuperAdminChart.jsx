@@ -687,7 +687,7 @@ const SuperAdminChart = () => {
             labels,
             datasets: [
                 {
-                    label: 'Fuel Lost (Liters)',
+                    label: 'Extra Fuel Consumption (Liters)',
                     data: fuelLostData,
                     backgroundColor: 'rgba(239, 68, 68, 0.7)',
                     borderColor: 'rgba(239, 68, 68, 1)',
@@ -817,7 +817,7 @@ const SuperAdminChart = () => {
                 position: 'left',
                 title: {
                     display: true,
-                    text: 'Fuel Lost (Liters)'
+                    text: 'Extra Fuel Consumption (Liters)'
                 },
                 beginAtZero: true
             },
@@ -888,7 +888,7 @@ const SuperAdminChart = () => {
             description: `Month: ${completedRoutesMonth.month || 'Current'}`
         },
         {
-            title: "Total Fuel Lost",
+            title: "Total Extra Fuel Consumption",
             value: `${formatNumber(fuelLostTotal.total_fuel_lost || 0, 2)} L`,
             icon: FunnelIcon,
             bgColor: "bg-gradient-to-br from-red-500 to-red-600",
@@ -908,7 +908,7 @@ const SuperAdminChart = () => {
                                 <CurrencyDollarIcon className="h-8 w-8" />
                             </div>
                             <div>
-                                <p className="text-sm opacity-90 font-medium">Cost Fuel Lost</p>
+                                <p className="text-sm opacity-90 font-medium">Cost Extra Fuel Consumption</p>
                                 <p className="text-xs opacity-80 mt-1">Total biaya fuel hilang</p>
                             </div>
                         </div>
@@ -924,7 +924,7 @@ const SuperAdminChart = () => {
                         </h2>
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="bg-white bg-opacity-20 p-3 rounded-lg">
-                                <p className="text-xs opacity-90">Fuel Lost</p>
+                                <p className="text-xs opacity-90">Extra Fuel Consumption</p>
                                 <p className="text-sm font-semibold">{formatNumber(filteredFuelData.summary.total_fuel_lost_liters || 0, 2)} L</p>
                             </div>
                             <div className="bg-white bg-opacity-20 p-3 rounded-lg">
@@ -1037,7 +1037,7 @@ const SuperAdminChart = () => {
     // Fuel Cost Statistics Cards sesuai struktur data baru - DIPERBAIKI untuk format tanpa .00
     const fuelCostCards = [
         {
-            title: "Total Fuel Lost",
+            title: "Total Extra Fuel Consumption",
             value: `${formatNumber(filteredFuelData.summary.total_fuel_lost_liters || 0, 2)} L`,
             description: "Total volume fuel yang hilang",
             icon: FunnelIcon,
@@ -1297,7 +1297,7 @@ const SuperAdminChart = () => {
                                                 <span className="font-medium">{data.count}</span>
                                             </div>
                                             <div className="flex justify-between text-sm">
-                                                <span>Fuel Lost:</span>
+                                                <span>Extra Fuel Consumption:</span>
                                                 <span className="font-medium">{formatNumber(data.fuel_lost, 2)} L</span>
                                             </div>
                                             <div className="flex justify-between text-sm">
@@ -1338,7 +1338,7 @@ const SuperAdminChart = () => {
                                                 <span className="font-medium">{data.count}</span>
                                             </div>
                                             <div className="flex justify-between text-sm">
-                                                <span>Fuel Lost:</span>
+                                                <span>Extra Fuel Consumption:</span>
                                                 <span className="font-medium">{formatNumber(data.fuel_lost, 2)} L</span>
                                             </div>
                                             <div className="flex justify-between text-sm">
@@ -1407,7 +1407,7 @@ const SuperAdminChart = () => {
                                         Count
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Fuel Lost (L)
+                                        Extra Fuel Consumption (L)
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Cost (Rp)
@@ -1832,70 +1832,30 @@ const SuperAdminChart = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Tab Navigation - DITAMBAH tab Fuel Report */}
+            {/* Tab Navigation */}
             <div className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex space-x-4">
-                        <button
-                            onClick={() => setActiveTab("dashboard")}
-                            className={`px-4 py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "dashboard"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    <div className="flex overflow-x-auto scrollbar-hide -mb-px">
+                        {[
+                            { key: "dashboard", label: "Dashboard", icon: ChartBarIcon },
+                            { key: "monitoring", label: "Perjalanan", icon: MapIcon },
+                            { key: "ipb-monitoring", label: "Filter Route", icon: BuildingOfficeIcon },
+                            { key: "fuel-cost", label: "Fuel Cost", icon: FireIcon },
+                            { key: "fuel-report", label: "Laporan", icon: DocumentTextIcon },
+                        ].map(({ key, label, icon: Icon }) => (
+                            <button
+                                key={key}
+                                onClick={() => setActiveTab(key)}
+                                className={`flex items-center whitespace-nowrap px-3 py-3 sm:px-4 text-xs sm:text-sm font-medium border-b-2 transition-colors flex-shrink-0 ${
+                                    activeTab === key
+                                        ? "border-blue-600 text-blue-600 bg-blue-50"
+                                        : "border-transparent text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-300"
                                 }`}
-                        >
-                            <div className="flex items-center">
-                                <ChartBarIcon className="h-5 w-5 mr-2" />
-                                Dashboard
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("monitoring")}
-                            className={`px-4 py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "monitoring"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <MapIcon className="h-5 w-5 mr-2" />
-                                Perjalanan
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("ipb-monitoring")}
-                            className={`px-4 py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "ipb-monitoring"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <BuildingOfficeIcon className="h-5 w-5 mr-2" />
-                                Filter Route
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("fuel-cost")}
-                            className={`px-4 py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "fuel-cost"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <FireIcon className="h-5 w-5 mr-2" />
-                                Fuel Cost
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("fuel-report")}
-                            className={`px-4 py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "fuel-report"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <DocumentTextIcon className="h-5 w-5 mr-2" />
-                                Laporan
-                            </div>
-                        </button>
+                            >
+                                <Icon className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                                {label}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>

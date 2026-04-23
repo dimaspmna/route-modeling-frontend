@@ -460,7 +460,7 @@ const FleetRoute = () => {
 
                 console.log("Sending VRP request:", JSON.stringify(body, null, 2));
 
-                const res = await axios.post("http://127.0.0.1:5000/solve-vrp", body, {
+                const res = await axios.post(process.env.REACT_APP_VRP_API_URL + '/solve-vrp', body, {
                     timeout: 60000,
                 });
 

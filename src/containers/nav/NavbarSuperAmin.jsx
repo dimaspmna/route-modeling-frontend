@@ -171,13 +171,16 @@ export default function NavbarSuperAdmin({ children }) {
         <div className="min-h-full bg-gray-50">
             {/* Sidebar Mobile */}
             <Dialog as="div" className="relative z-50 lg:hidden" open={sidebarOpen} onClose={setSidebarOpen}>
-                <div className="fixed inset-0 bg-gray-900/80" />
+                <div className="fixed inset-0 bg-gray-900/80 transition-opacity" aria-hidden="true" />
 
                 <div className="fixed inset-0 flex">
-                    <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white">
+                    <Dialog.Panel className="relative flex w-full max-w-xs flex-1 flex-col bg-white shadow-xl">
                         <div className="flex items-center justify-between h-16 px-4 border-b border-gray-200">
-                    <img src="/logo_new.jpeg" className="h-10" alt="Route Modelling App" />
-                    <p className='font-bold'>Route Modelling App</p>                            <button
+                            <div className="flex items-center gap-2">
+                                <img src="/logo_new.jpeg" className="h-10" alt="Route Modelling App" />
+                                <p className="font-bold text-sm">Route Modelling App</p>
+                            </div>
+                            <button
                                 type="button"
                                 className="rounded-md p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 transition-colors"
                                 onClick={() => setSidebarOpen(false)}
@@ -249,7 +252,7 @@ export default function NavbarSuperAdmin({ children }) {
                     </button>
 
                     <div className="flex-1 min-w-0">
-                        <h1 className="text-xl font-semibold text-gray-900 ml-2 lg:ml-0">Super Admin Dashboard</h1>
+                        <h1 className="text-base sm:text-xl font-semibold text-gray-900 ml-2 lg:ml-0 truncate">Super Admin Dashboard</h1>
                     </div>
 
                     <div className="ml-auto flex items-center space-x-4">

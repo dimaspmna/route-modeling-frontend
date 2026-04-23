@@ -1,0 +1,23 @@
+services:
+  fe-oses:
+    image: dimaspmna/fe-oses-prod:latest
+    pull_policy: always # Memaksa docker cek ke hub apakah ada image baru
+    container_name: fe-oses
+    restart: unless-stopped
+    environment:
+      PORT: 3000
+      REACT_APP_API_URL: "https://api.pheosesxsindis.my.id"
+      REACT_APP_VRP_API_URL: "https://vrp.pheosesxsindis.my.id"
+    # HAPUS ATAU KOMENTARI ports agar tidak bisa diakses via IP:3000
+    # ports:
+    #   - "3000:80"
+    networks:
+      - oses-network
+    deploy:
+      resources:
+        limits:
+          memory: 3g
+
+networks:
+  oses-network:
+    external: true # Pastikan pakai external agar nyambung ke NPM

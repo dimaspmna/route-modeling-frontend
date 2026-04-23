@@ -688,7 +688,7 @@ const SpvChart = () => {
                                 <CurrencyDollarIcon className="h-8 w-8" />
                             </div>
                             <div>
-                                <p className="text-sm opacity-90 font-medium">Cost Fuel Lost</p>
+                                <p className="text-sm opacity-90 font-medium">Cost Extra Fuel Consumption</p>
                                 <p className="text-xs opacity-80 mt-1">Total biaya fuel hilang</p>
                             </div>
                         </div>
@@ -704,7 +704,7 @@ const SpvChart = () => {
                         </h2>
                         <div className="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="bg-white bg-opacity-20 p-3 rounded-lg">
-                                <p className="text-xs opacity-90">Fuel Lost</p>
+                                <p className="text-xs opacity-90">Extra Fuel Consumption</p>
                                 <p className="text-sm font-semibold">{formatNumber(filteredFuelData.summary.total_fuel_lost_liters || 0, 2)} L</p>
                             </div>
                             <div className="bg-white bg-opacity-20 p-3 rounded-lg">
@@ -769,7 +769,7 @@ const SpvChart = () => {
             description: `Month: ${completedRoutesMonth.month || 'Current'}`
         },
         {
-            title: "Total Fuel Lost",
+            title: "Total Extra Fuel Consumption",
             value: `${formatNumber(fuelLostTotal.total_fuel_lost || 0, 2)} L`,
             icon: FunnelIcon,
             bgColor: "bg-gradient-to-br from-red-500 to-red-600",
@@ -853,7 +853,7 @@ const SpvChart = () => {
     // Fuel Cost Statistics Cards sesuai struktur data baru - DITAMBAHKAN
     const fuelCostCards = [
         {
-            title: "Total Fuel Lost",
+            title: "Total Extra Fuel Consumption",
             value: `${formatNumber(filteredFuelData.summary.total_fuel_lost_liters || 0, 2)} L`,
             description: "Total volume fuel yang hilang",
             icon: FunnelIcon,
@@ -902,14 +902,14 @@ const SpvChart = () => {
 
                 {/* Filter Section */}
                 <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-                        <div className="flex items-center space-x-4">
+                    <div className="flex flex-col gap-4 mb-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
                                 <FunnelIcon className="h-5 w-5 text-blue-500 mr-2" />
                                 Filter Parameters
                             </h3>
-                            <div className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded">
-                                Applied: {filteredFuelData.filter.type} / {filteredFuelData.filter.region} / {filteredFuelData.filter.start_date} to {filteredFuelData.filter.end_date}
+                            <div className="text-xs text-gray-500 bg-gray-100 px-3 py-1 rounded break-all">
+                                Applied: {filteredFuelData.filter.type} / {filteredFuelData.filter.region} / {filteredFuelData.filter.start_date} - {filteredFuelData.filter.end_date}
                             </div>
                         </div>
                         <div className="flex space-x-3">
@@ -1411,69 +1411,30 @@ const SpvChart = () => {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Tab Navigation - DIPERBAIKI untuk menambahkan Fuel Cost */}
+            {/* Tab Navigation */}
             <div className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex flex-wrap space-x-2 md:space-x-4">
-                        <button
-                            onClick={() => setActiveTab("dashboard")}
-                            className={`px-3 py-2 md:px-4 md:py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "dashboard"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
+                    <div className="flex overflow-x-auto scrollbar-hide -mb-px">
+                        {[
+                            { key: "dashboard", label: "Dashboard", icon: ChartBarIcon },
+                            { key: "monitoring", label: "Perjalanan", icon: MapIcon },
+                            { key: "ipb-monitoring", label: "Filter Route", icon: BuildingOfficeIcon },
+                            { key: "fuel-cost", label: "Fuel Cost", icon: FireIcon },
+                            { key: "fuel-lost-report", label: "Laporan", icon: InformationCircleIcon },
+                        ].map(({ key, label, icon: Icon }) => (
+                            <button
+                                key={key}
+                                onClick={() => setActiveTab(key)}
+                                className={`flex items-center whitespace-nowrap px-3 py-3 sm:px-4 text-xs sm:text-sm font-medium border-b-2 transition-colors flex-shrink-0 ${
+                                    activeTab === key
+                                        ? "border-blue-600 text-blue-600 bg-blue-50"
+                                        : "border-transparent text-gray-600 hover:text-blue-600 hover:bg-blue-50 hover:border-blue-300"
                                 }`}
-                        >
-                            <div className="flex items-center">
-                                <ChartBarIcon className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                                <span className="hidden sm:inline">Dashboard</span>
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("monitoring")}
-                            className={`px-3 py-2 md:px-4 md:py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "monitoring"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <MapIcon className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                                <span className="hidden sm:inline">Route Monitoring</span>
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("ipb-monitoring")}
-                            className={`px-3 py-2 md:px-4 md:py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "ipb-monitoring"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <BuildingOfficeIcon className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                                <span className="hidden sm:inline">Filter Route</span>
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("fuel-cost")}
-                            className={`px-3 py-2 md:px-4 md:py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "fuel-cost"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <FireIcon className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                                <span className="hidden sm:inline">Fuel Cost</span>
-                            </div>
-                        </button>
-                        <button
-                            onClick={() => setActiveTab("fuel-lost-report")}
-                            className={`px-3 py-2 md:px-4 md:py-3 text-sm font-medium rounded-t-lg transition-colors ${activeTab === "fuel-lost-report"
-                                ? "bg-blue-600 text-white"
-                                : "text-gray-600 hover:text-blue-600 hover:bg-blue-50"
-                                }`}
-                        >
-                            <div className="flex items-center">
-                                <InformationCircleIcon className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-                                Laporan</div>
-                        </button>
+                            >
+                                <Icon className="h-4 w-4 mr-1.5 flex-shrink-0" />
+                                {label}
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>

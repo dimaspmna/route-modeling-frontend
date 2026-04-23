@@ -798,7 +798,7 @@ const FuelLostReport = () => {
                     });
                 } else if (reportType === 'reroute') {
                     // Data khusus untuk laporan reroute (mengelompokkan berdasarkan id_rute_destinasi)
-                    const mainHeaders = ['No', 'Nama Kapal', 'Tipe', 'Region', 'Tanggal', 'Jumlah Reroute', 'Total Fuel Lost', 'Total Biaya', 'Perubahan Jarak'];
+                    const mainHeaders = ['No', 'Nama Kapal', 'Tipe', 'Region', 'Tanggal', 'Jumlah Reroute', 'Total Extra Fuel Consumption', 'Total Biaya', 'Perubahan Jarak'];
                     
                     const mainData = allData.map((item, index) => {
                         const routeType = getRouteType(item);
@@ -855,7 +855,7 @@ const FuelLostReport = () => {
                             currentY += 8;
                             
                             // Header untuk detail reroute logs dengan kolom tambahan
-                            const detailHeaders = ['No', 'Tanggal', 'Nama Pereroute', 'Catatan', 'Fuel Lost', 'Biaya', 'Perubahan Jarak'];
+                            const detailHeaders = ['No', 'Tanggal', 'Nama Pereroute', 'Catatan', 'Extra Fuel Consumption', 'Biaya', 'Perubahan Jarak'];
                             
                             const detailData = item.reroute_logs.map((log, logIndex) => {
                                 return [
@@ -985,7 +985,7 @@ const FuelLostReport = () => {
                     
                     doc.text(`Total Data: ${allData.length} rute`, 14, finalY + 5);
                     doc.text(`Total Reroute Logs: ${totalRerouteLogs} perubahan`, 14, finalY + 10);
-                    doc.text(`Total Fuel Lost: ${totalFuelLost.toFixed(2)} L`, 14, finalY + 15);
+                    doc.text(`Total Extra Fuel Consumption: ${totalFuelLost.toFixed(2)} L`, 14, finalY + 15);
                     doc.text(`Total Biaya: Rp ${totalCost.toLocaleString('id-ID')}`, 14, finalY + 20);
                     
                     // Hitung berdasarkan tipe
@@ -1301,7 +1301,7 @@ const FuelLostReport = () => {
                     worksheet.addRow([]);
                     const mainHeaderRow = worksheet.addRow([
                         'No', 'Nama Kapal', 'Tipe', 'Region', 'Tanggal', 'Jumlah Reroute', 
-                        'Total Fuel Lost', 'Total Biaya', 'Perubahan Jarak', 'Nama Pereroute', 'Catatan'
+                        'Total Extra Fuel Consumption', 'Total Biaya', 'Perubahan Jarak', 'Nama Pereroute', 'Catatan'
                     ]);
                     
                     // Style header utama
@@ -1346,7 +1346,7 @@ const FuelLostReport = () => {
                             detailHeaderRow.font = { bold: true, italic: true };
                             
                             // Header tabel detail
-                            const logHeaderRow = worksheet.addRow(['', 'No', 'Tanggal', 'Nama Pereroute', 'Catatan', 'Fuel Lost', 'Biaya', 'Perubahan Jarak']);
+                            const logHeaderRow = worksheet.addRow(['', 'No', 'Tanggal', 'Nama Pereroute', 'Catatan', 'Extra Fuel Consumption', 'Biaya', 'Perubahan Jarak']);
                             logHeaderRow.font = { bold: true };
                             logHeaderRow.fill = {
                                 type: 'pattern',
@@ -1390,7 +1390,7 @@ const FuelLostReport = () => {
                         { width: 12 },  // Region
                         { width: 15 },  // Tanggal
                         { width: 15 },  // Jumlah Reroute
-                        { width: 15 },  // Total Fuel Lost
+                        { width: 15 },  // Total Extra Fuel Consumption
                         { width: 15 },  // Total Biaya
                         { width: 15 },  // Perubahan Jarak
                         { width: 20 },  // Nama Pereroute
@@ -1423,7 +1423,7 @@ const FuelLostReport = () => {
                     const summaryRow3 = worksheet.addRow(['Total Reroute Logs:', '', '', '', '', totalRerouteLogs, '', '', '', '', '']);
                     summaryRow3.font = { bold: true };
                     
-                    const summaryRow4 = worksheet.addRow(['Total Fuel Lost:', '', '', '', '', totalFuelLost, '', '', '', '', '']);
+                    const summaryRow4 = worksheet.addRow(['Total Extra Fuel Consumption:', '', '', '', '', totalFuelLost, '', '', '', '', '']);
                     summaryRow4.font = { bold: true };
                     
                     const summaryRow5 = worksheet.addRow(['Total Biaya:', '', '', '', '', totalCost, '', '', '', '', '']);
@@ -1806,7 +1806,7 @@ const FuelLostReport = () => {
         { key: 'nama_rute', header: 'Rute', width: 25 },
         { key: 'tanggal_keberangkatan', header: 'Tanggal', format: 'date', width: 15 },
         { key: 'fuel_type', header: 'Jenis Fuel', width: 15 },
-        { key: 'los_fuel_summary', header: 'Fuel Lost (L)', format: 'number', width: 12 },
+        { key: 'los_fuel_summary', header: 'Extra Fuel Consumption (L)', format: 'number', width: 12 },
         { key: 'total_lost_value', header: 'Kerugian (Rp)', format: 'currency', width: 15 },
         { key: 'status', header: 'Status', width: 12 }
     ];
@@ -1823,7 +1823,7 @@ const FuelLostReport = () => {
         { key: 'ship_name', header: 'Nama Kapal', width: 20 },
         { key: 'tanggal', header: 'Tanggal', format: 'date', width: 15 },
         { key: 'jumlah_reroute_log', header: 'Jumlah Reroute', width: 15 },
-        { key: 'total_fuel_lost_reroute', header: 'Total Fuel Lost', format: 'number', width: 15 },
+        { key: 'total_fuel_lost_reroute', header: 'Total Extra Fuel Consumption', format: 'number', width: 15 },
         { key: 'total_fuel_cost', header: 'Total Biaya', format: 'currency', width: 15 },
         { key: 'total_perubahan_jarak', header: 'Perubahan Jarak', format: 'number', width: 15 },
         { key: 'nama_pereroute', header: 'Nama Pereroute', width: 20 },
@@ -2149,7 +2149,7 @@ const FuelLostReport = () => {
                         </span>
                         <div className="flex gap-2">
                             <button
-                                onClick={() => downloadAllPDF('fuelLost', fuelLostColumns, "Laporan Fuel Lost")}
+                                onClick={() => downloadAllPDF('fuelLost', fuelLostColumns, "Laporan Extra Fuel Consumption")}
                                 disabled={loading.fuelLost}
                                 className="px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center text-sm"
                             >
@@ -2157,7 +2157,7 @@ const FuelLostReport = () => {
                                 PDF
                             </button>
                             <button
-                                onClick={() => downloadAllExcel('fuelLost', fuelLostColumns, "Laporan Fuel Lost")}
+                                onClick={() => downloadAllExcel('fuelLost', fuelLostColumns, "Laporan Extra Fuel Consumption")}
                                 disabled={loading.fuelLost}
                                 className="px-3 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center text-sm"
                             >
@@ -2260,7 +2260,7 @@ const FuelLostReport = () => {
                                 <tr>
                                     <td colSpan={10} className="px-4 py-8 text-center text-sm text-gray-500">
                                         <CalendarIcon className="h-12 w-12 text-gray-300 mx-auto mb-2" />
-                                        <p>Tidak ada data laporan fuel lost</p>
+                                        <p>Tidak ada data laporan extra fuel consumption</p>
                                         <p className="text-xs mt-1">Data akan ditampilkan sesuai dengan filter yang diterapkan</p>
                                     </td>
                                 </tr>
@@ -2493,7 +2493,7 @@ const FuelLostReport = () => {
                 <div className="flex items-center justify-between mb-6">
                     <h3 className="text-xl font-semibold text-gray-900 flex items-center">
                         <ArrowsRightLeftIcon className="h-6 w-6 text-orange-500 mr-3" />
-                        Laporan Fuel Lost Reroute
+                        Laporan Extra Fuel Consumption Reroute
                     </h3>
                     <div className="flex items-center gap-4">
                         <span className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
@@ -2501,7 +2501,7 @@ const FuelLostReport = () => {
                         </span>
                         <div className="flex gap-2">
                             <button
-                                onClick={() => downloadAllPDF('reroute', rerouteColumns, "Laporan Fuel Lost Reroute")}
+                                onClick={() => downloadAllPDF('reroute', rerouteColumns, "Laporan Extra Fuel Consumption Reroute")}
                                 disabled={loading.reroute}
                                 className="px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center text-sm"
                             >
@@ -2509,7 +2509,7 @@ const FuelLostReport = () => {
                                 PDF
                             </button>
                             <button
-                                onClick={() => downloadAllExcel('reroute', rerouteColumns, "Laporan Fuel Lost Reroute")}
+                                onClick={() => downloadAllExcel('reroute', rerouteColumns, "Laporan Extra Fuel Consumption Reroute")}
                                 disabled={loading.reroute}
                                 className="px-3 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:opacity-50 flex items-center justify-center text-sm"
                             >
@@ -2546,7 +2546,7 @@ const FuelLostReport = () => {
                                     Jumlah Reroute
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Total Fuel Lost
+                                    Total Extra Fuel Consumption
                                 </th>
                                 <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Total Biaya
