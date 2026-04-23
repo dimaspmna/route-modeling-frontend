@@ -15,7 +15,6 @@ import {
     TableCellsIcon,
     FireIcon,
     CurrencyDollarIcon,
-    ExclamationTriangleIcon,
     InformationCircleIcon,
     GlobeAmericasIcon,
     MagnifyingGlassIcon

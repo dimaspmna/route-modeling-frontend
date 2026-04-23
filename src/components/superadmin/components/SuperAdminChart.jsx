@@ -12,19 +12,16 @@ import {
     CalendarIcon,
     MapIcon,
     DocumentTextIcon,
-    UsersIcon,
     MagnifyingGlassIcon,
     BuildingOfficeIcon,
-    ShieldCheckIcon,
     TableCellsIcon,
-    TruckIcon,
     FireIcon,
     CurrencyDollarIcon,
     ExclamationTriangleIcon,
     InformationCircleIcon,
     GlobeAmericasIcon
 } from "@heroicons/react/24/outline";
-import { Bar, Pie, Doughnut, Line } from "react-chartjs-2";
+import { Bar, Pie, Doughnut } from "react-chartjs-2";
 import {
     Chart as ChartJS,
     ArcElement,
